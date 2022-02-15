@@ -5,48 +5,10 @@ import { MDBDataTable } from "mdbreact";
 import shortId from "shortid";
 import Alert from "./Alert";
 
-const tests = [
-  {
-    id: 1,
-    fullname: "Amobi Sam",
-    age: 23,
-    mobile: "08137507598",
-    package: "Novel",
-    salary: 200,
-  },
-  {
-    id: 2,
-    fullname: "Izie Ify",
-    age: 35,
-    mobile: "08173807598",
-    package: "Rice",
-    salary: 700,
-  },
-  {
-    id: 3,
-    fullname: "Kingt Eze",
-    age: 38,
-    mobile: "08155807598",
-    package: "Bread",
-    salary: 800,
-  },
-  {
-    id: 4,
-    fullname: "Innocent Ezie",
-    age: 14,
-    mobile: "08134807598",
-    package: "Books",
-    salary: 200,
-  },
-];
-
 function Trainer() {
   const [toggle, setToggle] = useState(false);
-  //   const [newId, setNewId] = useState("");
   const [update, setUpdate] = useState(false);
-
   const [alert, setAlert] = useState(false);
-
   const [deleteRecord, setDeleteRecord] = useState("");
 
   const [trainers, setTrainers] = useState({
@@ -253,7 +215,7 @@ function Trainer() {
                   name="age"
                   required
                 />
-                {/* <label htmlFor="Mobile Number">Mobile Number</label> */}
+
                 <input
                   type="text"
                   onChange={handleChange}
@@ -263,7 +225,7 @@ function Trainer() {
                   required
                 />
                 <input
-                  placeholder="package:"
+                  placeholder="Package:"
                   onChange={handleChange}
                   type="text"
                   name="package"

@@ -125,6 +125,50 @@ ends here */
   color: rgb(189, 182, 182);
 }
 
+.member-input {
+  text-align: center;
+  width: 400px;
+  height: 570px;
+  margin: auto;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  left: 0;
+  bottom: 0;
+  padding: 20px;
+  box-shadow: 1px 1px 5px 1px #888888;
+  background-color: white;
+  border: 2px solid rgb(231, 225, 225);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  animation: slide-up 0.2s ease-in;
+}
+
+.member-input input {
+  width: 100%;
+
+  height: 40px !important;
+  background-color: white;
+  color: rgb(59, 53, 53);
+  letter-spacing: 1px;
+  border-radius: 3px;
+  font-size: 18px;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+
+  border: 2px solid rgb(223, 220, 220);
+}
+
+.member-input input:first-child {
+  margin-top: 20px;
+}
+
+.imember-input input::placeholder {
+  color: rgb(189, 182, 182);
+}
+
 .btn-container {
   width: 100%;
   display: flex;
