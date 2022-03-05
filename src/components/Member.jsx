@@ -10,7 +10,8 @@ function Member() {
   const [update, setUpdate] = useState(false); // to know when we want to update a post to conditional rendering
   const [alert, setAlert] = useState(false); // alert for delete confirmation
   const [deleteRecord, setDeleteRecord] = useState(""); // storing id of the record to be deleted
-
+  const [formErrors, setFormErrors] = useState({});
+  const [submit, setSubmit] = useState(false);
   const [members, setMembers] = useState({
     //member object
     fullname: "",
@@ -41,20 +42,81 @@ function Member() {
     });
   };
 
+  // x = 10;
+
+  // console.log(x);
+  // var x;
+
   const handleChange = (e) => {
     const { value, name } = e.target;
 
     setMembers((prev) => ({ ...prev, [name]: value }));
   };
 
+  //handle form errors
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.fullname) {
+      errors.fullname = "full name required!";
+    }
+
+    if (!values.age) {
+      errors.age = "age is required!";
+    }
+
+    if (!values.mobile) {
+      errors.mobile = "mobile is required!";
+    }
+
+    if (!values.hightwight) {
+      errors.hightwight = "hightwight is required!";
+    }
+
+    if (!values.illness) {
+      errors.illness = "illness is required";
+    }
+
+    if (!values.package) {
+      errors.package = "package is required";
+    }
+
+    if (!values.payment) {
+      errors.payment = "payment is required";
+    }
+
+    if (!values.trainer) {
+      errors.trainer = "trainer is required";
+    }
+    return errors;
+
+    // fullname: "",
+    // age: "",
+    // mobile: "",
+    // hightwight: "",
+    // illness: "",
+    // package: "",
+    // payment: "",
+    // trainer: "",
+  };
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && submit) {
+      setSubmit(true);
+    }
+  }, [formErrors]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    setFormErrors(validate(members));
+    setSubmit(true);
     //I use the update state to know when creating a new member or updating the member info
     //the state is initially set to false, but when the icon for update post is clicked,
     //the update state is set to true in updatehandler function
 
-    if (update) {
+    if (update && Object.keys(formErrors).length === 0 && submit && submit) {
       //we filter out the old member data using the using the id
       const oldMemberData = memberData.filter((item) => {
         return item.id !== members.id;
@@ -78,24 +140,33 @@ function Member() {
         payment: "",
         trainer: "",
       });
+
+      setSubmit(false);
     } else {
-      // if we are adding new member, then i use shortId to generate a unique id which i can use to identify each member
-      const Id = shortId.generate();
+      // setSubmit(true);
+      console.log(formErrors);
+      if (Object.keys(formErrors).length === 0 && submit) {
+        console.log(submit);
+        // if we are adding new member, then i use shortId to generate a unique id which i can use to identify each member
+        const Id = shortId.generate();
 
-      // i use the spread operator to spread the array passing in the new member data and assigning id to it as well
+        // i use the spread operator to spread the array passing in the new member data and assigning id to it as well
 
-      setMemberData((prev) => [...prev, { ...members, id: Id }]);
-      setToggle(false);
-      setMembers({
-        fullname: "",
-        age: "",
-        mobile: "",
-        hightwight: "",
-        illness: "",
-        package: "",
-        payment: "",
-        trainer: "",
-      });
+        setMemberData((prev) => [...prev, { ...members, id: Id }]);
+        setToggle(false);
+        setMembers({
+          fullname: "",
+          age: "",
+          mobile: "",
+          hightwight: "",
+          illness: "",
+          package: "",
+          payment: "",
+          trainer: "",
+        });
+
+        setSubmit(false);
+      }
     }
   };
 
@@ -247,15 +318,16 @@ function Member() {
                   placeholder="Full Name:"
                   name="fullname"
                   value={members.fullname}
-                  required
+                  className={formErrors.fullname && " error"}
                 />
+
                 <input
                   type="number"
                   onChange={handleChange}
                   placeholder="Age:"
                   value={members.age}
                   name="age"
-                  required
+                  className={formErrors.age && " error"}
                 />
                 {/* <label htmlFor="Mobile Number">Mobile Number</label> */}
                 <input
@@ -264,7 +336,7 @@ function Member() {
                   placeholder="Mobile Number:"
                   value={members.mobile}
                   name="mobile"
-                  required
+                  className={formErrors.mobile && " error"}
                 />
                 <input
                   placeholder="Hight/Wight:"
@@ -272,7 +344,7 @@ function Member() {
                   type="text"
                   name="hightwight"
                   value={members.hightwight}
-                  required
+                  className={formErrors.hightwight && " error"}
                 />
                 <input
                   placeholder="Illness:"
@@ -280,7 +352,7 @@ function Member() {
                   type="text"
                   name="illness"
                   value={members.illness}
-                  required
+                  className={formErrors.illness && " error"}
                 />
                 <input
                   placeholder="Package:"
@@ -288,7 +360,7 @@ function Member() {
                   type="text"
                   name="package"
                   value={members.package}
-                  required
+                  className={formErrors.package && " error"}
                 />
                 <input
                   type="number"
@@ -296,7 +368,7 @@ function Member() {
                   placeholder="Payment:"
                   name="payment"
                   value={members.payment}
-                  required
+                  className={formErrors.payment && " error"}
                 />
                 <input
                   placeholder="Trainer:"
@@ -304,7 +376,7 @@ function Member() {
                   type="text"
                   name="trainer"
                   value={members.trainer}
-                  required
+                  className={formErrors.trainer && " error"}
                 />
               </div>
             </form>

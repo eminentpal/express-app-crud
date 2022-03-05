@@ -10,6 +10,8 @@ function Trainer() {
   const [update, setUpdate] = useState(false);
   const [alert, setAlert] = useState(false);
   const [deleteRecord, setDeleteRecord] = useState("");
+  const [formErrors, setFormErrors] = useState({});
+  const [submit, setSubmit] = useState(false);
 
   const [trainers, setTrainers] = useState({
     fullname: "",
@@ -48,13 +50,50 @@ function Trainer() {
   //     setNewId(Id);
   //   };
 
+  //handle form errors
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.fullname) {
+      errors.fullname = "full name required!";
+    }
+
+    if (!values.age) {
+      errors.age = "age is required!";
+    }
+
+    if (!values.mobile) {
+      errors.mobile = "mobile is required!";
+    }
+
+    if (!values.package) {
+      errors.package = "package is required";
+    }
+
+    if (!values.salary) {
+      errors.salary = "salary is required";
+    }
+    return errors;
+  };
+  useEffect(() => {
+    // console.log({ e: formErrors });
+    if (Object.keys(formErrors).length === 0 && submit) {
+      setSubmit(true);
+    }
+  }, [submit, formErrors]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (update) {
+    setFormErrors(validate(trainers));
+    setSubmit(true);
+
+    if (update && Object.keys(formErrors).length === 0 && submit) {
       const newTrainData = trainData.filter((item) => {
         return item.id !== trainers.id;
       });
+
       setTrainData([...newTrainData, trainers]);
       setUpdate(false);
       setToggle(false);
@@ -65,22 +104,28 @@ function Trainer() {
         package: "",
         salary: "",
       });
+
+      setSubmit(false);
     } else {
       // createId();
 
       // const { fullname, age, mobile, package: packageItem, salary } = trainers;
 
-      const Id = shortId.generate();
+      if (Object.keys(formErrors).length === 0 && submit) {
+        const Id = shortId.generate();
 
-      setTrainData((prev) => [...prev, { ...trainers, id: Id }]);
-      setToggle(false);
-      setTrainers({
-        fullname: "",
-        age: "",
-        mobile: "",
-        package: "",
-        salary: "",
-      });
+        setTrainData((prev) => [...prev, { ...trainers, id: Id }]);
+        setToggle(false);
+        setTrainers({
+          fullname: "",
+          age: "",
+          mobile: "",
+          package: "",
+          salary: "",
+        });
+
+        setSubmit(false);
+      }
     }
   };
 
@@ -205,7 +250,7 @@ function Trainer() {
                   placeholder="Full Name:"
                   name="fullname"
                   value={trainers.fullname}
-                  required
+                  className={formErrors.fullname && " error"}
                 />
                 <input
                   type="number"
@@ -213,7 +258,7 @@ function Trainer() {
                   placeholder="Age:"
                   value={trainers.age}
                   name="age"
-                  required
+                  className={formErrors.age && " error"}
                 />
 
                 <input
@@ -222,7 +267,7 @@ function Trainer() {
                   placeholder="Mobile Number:"
                   value={trainers.mobile}
                   name="mobile"
-                  required
+                  className={formErrors.mobile && " error"}
                 />
                 <input
                   placeholder="Package:"
@@ -230,7 +275,7 @@ function Trainer() {
                   type="text"
                   name="package"
                   value={trainers.package}
-                  required
+                  className={formErrors.package && " error"}
                 />
                 <input
                   type="number"
@@ -238,7 +283,7 @@ function Trainer() {
                   placeholder="Salary:"
                   name="salary"
                   value={trainers.salary}
-                  required
+                  className={formErrors.salary && " error"}
                 />
               </div>
             </form>
