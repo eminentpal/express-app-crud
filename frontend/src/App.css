@@ -1,0 +1,44 @@
+h1   {
+  color: #2a9d8f;
+}
+.button{
+ 
+  color: white;
+  background-color: #2a9d8f;
+}
+
+.button:hover {
+  background-color:white ; 
+  color: #2a9d8f;
+}
+
+.img-girl{
+  height: 600px;
+}
+
+.bg{
+  background-color: #2a9d8f;
+}
+
+.paregraph{
+  margin-top: 20px;
+}
+h4{
+  font-weight: bold;
+}
+
+h3{
+  color: #0BC9ED;
+}
+
+.facalty{
+  margin-top: 80px;
+  margin-bottom: 80px;
+  background-color: #e5e5e5;
+}
+.facalty-inside{
+  margin-left: 100px;
+padding-top: 40px;
+padding-bottom: 40px;
+
+}
