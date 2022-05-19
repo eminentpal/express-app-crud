@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header";
 import { Container, Row, Col } from "react-bootstrap";
 import muscle from "../images/muscle.png";
@@ -6,8 +6,15 @@ import lose from "../images/lose.png";
 import back from "../images/back.png";
 import running from "../images/running.png";
 import Footer from "./Footer";
+import { useHistory } from "react-router-dom";
 
-function Facalty() {
+function Facalty({ authorised }) {
+  const history = useHistory();
+  useEffect(() => {
+    if (!authorised) {
+      history.push("/");
+    }
+  }, [authorised]);
   return (
     <div>
       <Header />

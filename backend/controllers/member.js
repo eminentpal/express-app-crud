@@ -47,6 +47,7 @@ exports.newMember = async (req, res) => {
       payment,
       package,
       trainer,
+      // user: req.user.id,
     });
 
     console.log(data);
@@ -66,11 +67,8 @@ exports.updateMember = async (req, res) => {
   const { id } = req.params;
   console.log(id);
   try {
-    console.log(id);
-    console.log("j");
     const member = await Member.findById(id);
-    console.log("j");
-    console.log({ mem: member });
+
     if (!member) {
       res.status(404).json({
         error: "No Member found with that ID!",

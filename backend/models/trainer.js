@@ -17,6 +17,11 @@ const trainerSchema = new mongoose.Schema({
   salary: {
     type: Number,
   },
+  // user: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: "User",
+  //   required: true,
+  // },
 });
 
 module.exports = mongoose.model("Trainer", trainerSchema);

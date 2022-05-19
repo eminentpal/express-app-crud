@@ -6,6 +6,7 @@ const {
   updateMember,
   deleteMember,
 } = require("../controllers/member");
+const { isAuthenticatedUser } = require("../middlewares/authenticate");
 
 router.route("/members").get(membersList);
 router.route("/members/new").post(newMember);

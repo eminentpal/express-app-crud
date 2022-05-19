@@ -6,6 +6,7 @@ const {
   updateTrainer,
   deleteTrainer,
 } = require("../controllers/trainer");
+const { isAuthenticatedUser } = require("../middlewares/authenticate");
 
 router.route("/trainers").get(trainersList);
 router.route("/trainers/new").post(newTrainer);

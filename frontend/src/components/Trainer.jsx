@@ -5,8 +5,9 @@ import { MDBDataTable } from "mdbreact";
 import shortId from "shortid";
 import Alert from "./Alert";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-function Trainer() {
+function Trainer({ authorised }) {
   const [toggle, setToggle] = useState(false);
   const [update, setUpdate] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -14,7 +15,7 @@ function Trainer() {
   const [formErrors, setFormErrors] = useState({});
   const [submit, setSubmit] = useState(false);
   const [success, setSuccess] = useState(false);
-
+  const history = useHistory();
   const [trainers, setTrainers] = useState({
     fullname: "",
     age: "",
@@ -92,6 +93,8 @@ function Trainer() {
   const getTrainers = async () => {
     try {
       const { data } = await axios.get("http://localhost:4000/trainers");
+
+      console.log(data);
       setTrainData(data.trainers);
     } catch (err) {
       console.log(err);
@@ -100,11 +103,14 @@ function Trainer() {
 
   useEffect(() => {
     getTrainers();
+    if (!authorised) {
+      history.push("/");
+    }
 
     if (Object.keys(formErrors).length === 0 && submit) {
       setSubmit(true);
     }
-  }, [formErrors]);
+  }, [formErrors, authorised]);
 
   const checkErrors = () => {
     if (!validateName) {

@@ -2,8 +2,10 @@ const Trainer = require("../models/trainer");
 
 exports.trainersList = async (req, res) => {
   try {
+    // const trainers = await Trainer.find({ user: req.user.id });
     const trainers = await Trainer.find();
 
+    console.log(trainers);
     // console.log(trainers);
 
     if (trainers.length === 0) {
@@ -36,6 +38,7 @@ exports.newTrainer = async (req, res) => {
 
       package,
       salary,
+      // user: req.user.id,
     });
 
     console.log(data);

@@ -5,10 +5,12 @@ import { MDBDataTable } from "mdbreact";
 import shortId from "shortid";
 import Alert from "./Alert";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-function Member() {
+function Member({ authorised }) {
   const baseURL = "http://localhost:4000";
 
+  const history = useHistory();
   const [toggle, setToggle] = useState(false); // for showing the add member popup container
   const [update, setUpdate] = useState(false); // to know when we want to update a post to conditional rendering
   const [alert, setAlert] = useState(false); // alert for delete confirmation
@@ -119,11 +121,14 @@ function Member() {
 
   useEffect(() => {
     getMembers();
-    console.log("o");
+    if (!authorised) {
+      history.push("/");
+    }
+
     if (Object.keys(formErrors).length === 0 && submit) {
       setSubmit(true);
     }
-  }, [formErrors]);
+  }, [formErrors, authorised]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -25,6 +25,11 @@ const memberSchema = new mongoose.Schema({
   trainer: {
     type: String,
   },
+  // user: {
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: "User",
+  //   required: true,
+  // },
 });
 
 module.exports = mongoose.model("Member", memberSchema);

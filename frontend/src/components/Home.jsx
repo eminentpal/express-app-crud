@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Carousel, Container, Button } from "react-bootstrap";
 import Header from "./Header";
 import first from "../images/first.png";
@@ -6,8 +6,15 @@ import second from "../images/second.jpg";
 import third from "../images/third.jpg";
 import { LinkContainer } from "react-router-bootstrap";
 import Footer from "./Footer";
+import { useHistory } from "react-router-dom";
 
-function Home() {
+function Home({ authorised }) {
+  const history = useHistory();
+  useEffect(() => {
+    if (!authorised) {
+      history.push("/");
+    }
+  }, [authorised]);
   return (
     <div>
       <Header />

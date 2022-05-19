@@ -32,12 +32,15 @@ if (process.env.NODE_ENV === "PRODUCTION") {
 
 const members = require("./routes/member");
 const trainer = require("./routes/trainer");
+const auth = require("./routes/auth");
 
 // app.use('/api/v1', products )
 // app.use('/api/v1', auth )
 
 app.use("/", members);
+
 app.use("/", trainer);
+app.use("/", auth);
 
 if (process.env.NODE_ENV === "PRODUCTION") {
   app.use(express.static(path.join(__dirname, "../Frontend/build")));
