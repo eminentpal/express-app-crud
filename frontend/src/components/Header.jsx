@@ -3,11 +3,11 @@ import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { useHistory } from "react-router-dom";
 
-function Home() {
+function Home({ setAuthorised }) {
   const history = useHistory();
   const logOut = () => {
     localStorage.removeItem("authorised");
-
+    setAuthorised(false);
     history.push("/");
   };
 
